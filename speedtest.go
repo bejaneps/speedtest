@@ -35,13 +35,6 @@ type Measurer interface {
 		uploadRate measurement.BitRate,
 		err error,
 	)
-
-	// Measure measures download and upload speeds per second
-	Measure(ctx context.Context) (
-		downloadRate measurement.BitRate,
-		uploadRate measurement.BitRate,
-		err error,
-	)
 }
 
 // New is a constructor for speedtest measure api

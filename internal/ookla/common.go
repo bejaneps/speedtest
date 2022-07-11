@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-
-	"github.com/bejaneps/speedtest/internal/measurement"
 )
 
 const apiURL = "https://www.speedtest.net/api/js/servers?engine=js&limit=%d"
@@ -18,15 +16,6 @@ const (
 
 type serverDetails struct {
 	URL string `json:"url"`
-}
-
-// Measure measures download and upload speeds per second using Ookla's speedtest.net API
-func (c *Client) Measure(ctx context.Context) (
-	download measurement.BitRate,
-	upload measurement.BitRate,
-	err error,
-) {
-	return 0, 0, nil
 }
 
 // getServersDetails requests from speedtest.net list of servers for
