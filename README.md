@@ -40,7 +40,6 @@ func main() {
 
 ## TODO
 
-* Add implementation of Upload function for Ookla's speedtest.net
 * Add implementation for Netflix's fast.com tool
 * Add functionality for latency check
 * Add functionality for closest server

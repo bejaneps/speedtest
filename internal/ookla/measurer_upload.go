@@ -15,9 +15,7 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-const (
-	uploadSize = 100_000
-)
+const uploadSize = 100_000
 
 // defaultUploadFunc is a variable to wrap upload function
 // for deterministic results

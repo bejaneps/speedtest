@@ -7,6 +7,7 @@ import (
 
 	"github.com/bejaneps/speedtest/internal/config"
 	"github.com/bejaneps/speedtest/internal/measurement"
+	"github.com/bejaneps/speedtest/internal/netflix"
 	"github.com/bejaneps/speedtest/internal/ookla"
 )
 
@@ -38,14 +39,17 @@ type Measurer interface {
 }
 
 // New is a constructor for speedtest measure api
-func New(tool measurementTool, opts ...config.Option) Measurer {
+func New(tool measurementTool, opts ...config.Option) (Measurer, error) {
 	conf := &config.Config{}
 
 	for _, opt := range opts {
 		opt(conf)
 	}
 
-	var measurer Measurer
+	var (
+		measurer Measurer
+		err      error
+	)
 
 	switch tool {
 	case OoklaSpeedtest:
@@ -55,9 +59,16 @@ func New(tool measurementTool, opts ...config.Option) Measurer {
 				Timeout: reqTimeoutDuration,
 			},
 		)
+	case NetflixFast:
+		measurer, err = netflix.NewClient(
+			conf,
+			&http.Client{
+				Timeout: reqTimeoutDuration,
+			},
+		)
 	}
 
-	return measurer
+	return measurer, err
 }
 
 // WithServerCount sets limit on how many servers
@@ -65,5 +76,16 @@ func New(tool measurementTool, opts ...config.Option) Measurer {
 func WithServerCount(serverCount int) config.Option {
 	return func(c *config.Config) {
 		c.ServerCount = serverCount
+	}
+}
+
+// WithToken sets authentication token for Netflix's
+// fast.com api.
+//
+// TODO: replace this option with a function
+// that will fetch token from response
+func WithToken(token string) config.Option {
+	return func(c *config.Config) {
+		c.Token = token
 	}
 }

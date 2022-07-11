@@ -2,6 +2,7 @@ package config
 
 type Config struct {
 	ServerCount int
+	Token       string
 }
 
 // Option is an optional functionality for
